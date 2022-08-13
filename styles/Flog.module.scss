@@ -1,0 +1,59 @@
+main.container {
+  padding: 1rem;
+}
+
+.format {
+  width: 100%;
+  padding: 1rem;
+}
+
+.logsGroup {
+  position: relative;
+  padding: 0;
+  margin: 0;
+}
+
+.logs {
+  width: 100%;
+  height: 100px;
+  padding: 1rem;
+  margin: 0;
+  resize: none;
+}
+
+.submit {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.parsedLogs {
+  width: 100%;
+
+  th {
+    text-align: left;
+    font-size: 2rem;
+  }
+
+  tr {
+    font-size: 2rem;
+  }
+}
+
+.logAccepted {
+  background-color: #66ff66;
+}
+.logRejected {
+  background-color: #ff6666;
+}
+
+@media (prefers-color-scheme: dark) {
+  .logAccepted {
+    background-color: #008800;
+  }
+  .logRejected {
+    background-color: #880000;
+  }
+}
