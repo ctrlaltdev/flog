@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 
-import { tcpFlagsParser, protocolParser, ios8601Parser, timestampParser, defaultParser } from '../utils/parsers'
+import { tcpFlagsParser, protocolParser, ios8601Parser, timestampParser, defaultParser, ipParser, typedParser } from '../utils/parsers'
 import { Format, Formats, ParsedValue } from '../typings/logs'
 import styles from '../styles/Flog.module.scss'
 
@@ -13,24 +13,24 @@ export const FIELDS: Formats = {
   'interface-id': {},
   'log-status': {},
   'pkt-dst-aws-service': {},
-  'pkt-dstaddr': {},
+  'pkt-dstaddr': { parser: ipParser },
   'pkt-src-aws-service': {},
-  'pkt-srcaddr': {},
+  'pkt-srcaddr': { parser: ipParser },
   'sublocation-id': {},
   'sublocation-type': {},
   'subnet-id': {},
   'tcp-flags': { parser: tcpFlagsParser },
   'traffic-path': {},
   'vpc-id': {},
-  action: {},
+  action: { parser: (val) => typedParser('action', val) },
   bytes: {},
-  dstaddr: {},
+  dstaddr: { parser: ipParser },
   dstport: {},
   end: { parser: timestampParser },
   packets: {},
   protocol: { parser: protocolParser },
   region: {},
-  srcaddr: {},
+  srcaddr: { parser: ipParser },
   srcport: {},
   start: { parser: timestampParser },
   timestamp: { parser: ios8601Parser },
@@ -73,13 +73,32 @@ export const LogHeaders = ({ format }: { format: Format[] }) => {
   )
 }
 
+const LogCell = ({ field }: { field: ParsedValue }) => {
+  const prefix = ''
+  const suffix = ''
+  let classnames = ''
+
+  if (field.type === 'ip' && field.orig !== '-') {
+    classnames = classNames(field.privateIP ? styles.logAccepted : styles.logRejected)
+  }
+
+  console.info(field)
+  if (field.type === 'action') {
+    classnames = classNames(field.value === 'ACCEPT' ? styles.logAccepted : null, field.value === 'REJECT' ? styles.logRejected : null)
+  }
+
+  return (
+    <td className={classnames}>{ prefix }{ field.value }{ suffix }</td>
+  )
+}
+
 export const LogRows = ({ logs, actionIndex }: { logs: ParsedValue[][], actionIndex: number }) => {
   return (
     <tbody>
       {logs.map((row: ParsedValue[], i: number) => (
-        <tr key={`row-${i}`} className={classNames(actionIndex > -1 && row[actionIndex]?.value === 'ACCEPT' ? styles.logAccepted : null, actionIndex > -1 && row[actionIndex]?.value === 'REJECT' ? styles.logRejected : null)}>
+        <tr key={`row-${i}`}>
           {row.map((field: ParsedValue, j: number) => (
-            <td key={`row-${i}-field-${j}`}>{ field.value }</td>
+            <LogCell key={`row-${i}-field-${j}`} field={field} />
           ))}
         </tr>
       ))}

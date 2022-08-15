@@ -1,4 +1,5 @@
 export type ParsedValue = {
+  orig: string
   value: string
   type: string
   [key: string]: any
