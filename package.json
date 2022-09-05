@@ -26,19 +26,19 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@types/node": "18.7.2",
+    "@types/node": "18.7.14",
     "@types/react": "18.0.17",
     "@types/react-dom": "18.0.6",
-    "@typescript-eslint/eslint-plugin": "^5.33.0",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.33.0",
-    "eslint": "^8.21.0",
+    "eslint": "^8.23.0",
     "eslint-config-next": "12.2.5",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-n": "^15.2.4",
+    "eslint-plugin-n": "^15.2.5",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.30.1",
-    "sass": "^1.54.4",
+    "sass": "^1.54.8",
     "typescript": "4.7.4"
   }
 }
